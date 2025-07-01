@@ -11,7 +11,6 @@ A reliable system for collecting, delivering, and storing jsonl log files in Cli
     - [Clickhouse Delivery](#clickhouse-delivery)
 - [Configuration Examples](#configuration-examples)
 - [Building the Project](#building-the-project)
-- [Deployment](#deployment)
 - [Running the Applications](#running-the-applications)
 - [Requirements](#requirements)
 - [License](#license)
