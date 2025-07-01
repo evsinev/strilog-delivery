@@ -1,8 +1,50 @@
-## Logs delivery
-                
-Send jsonl files to clickhouse
+## Logs delivery System
 
-## Example Configs
+A reliable system for collecting, delivering, and storing jsonl log files in Clickhouse database.
+
+## Table of Contents
+ 
+- [Overview](#overview)
+- [Components](#components)
+    - [Delivery Sender](#delivery-sender)
+    - [Delivery Receiver](#delivery-receiver)
+    - [Clickhouse Delivery](#clickhouse-delivery)
+- [Configuration Examples](#configuration-examples)
+- [Building the Project](#building-the-project)
+- [Deployment](#deployment)
+- [Running the Applications](#running-the-applications)
+- [Requirements](#requirements)
+- [License](#license)
+
+## Overview
+
+Strilog Delivery is a modular application designed to efficiently transfer JSONL (JSON Lines) log files from source systems to a Clickhouse database.
+
+The system consists of three main components:
+
+1. **Delivery Sender** - Collects log files from specified directories and sends them to the receiver
+2. **Delivery Receiver** - Accepts log files from senders and stores them temporarily
+3. **Clickhouse Delivery** - Processes received log files and loads them into Clickhouse database tables
+
+## Components
+
+### Delivery Sender
+
+The sender component monitors configured directories for log files and sends them to a receiver endpoint. It supports:
+- Multiple directory groups with different endpoints
+- Basic authentication
+- Automatic hostname detection
+- Configurable polling interval
+
+### Delivery Receiver
+
+The receiver component accepts log files from senders and stores them in a structured directory hierarchy for further processing.
+
+### Clickhouse Delivery
+
+The Clickhouse component processes the received log files and loads them into specified Clickhouse database tables.
+
+## Configuration Examples
 
 ### Delivery Sender
 
@@ -44,8 +86,41 @@ tables:
       - /var/delivery-receiver-1/database/host-1/app-2/queue-1
 ```
 
-## How to build
+## Building the Project
+
+Build all components with the following command:
 
 ```shell
 ./mvnw clean package -P sender-shaded,receiver-shaded,clickhouse-shaded
 ```
+
+This will create standalone JAR files for each component with all dependencies included.
+
+## Deployment
+
+Each component can be deployed separately. Sample deployment scripts are available:
+- `deploy-sender-vemu-2.sh` - For deploying the sender component
+- `deploy-receiver-vicl-2.sh` - For deploying the receiver component
+- `deploy-clickhouse-vicl-2.sh` - For deploying the Clickhouse component
+
+## Running the Applications
+### Sender
+``` 
+java -jar strilog-delivery-sender.jar /path/to/sender-config.yaml
+```
+### Receiver
+``` 
+java -jar strilog-delivery-receiver.jar /path/to/receiver-config.yaml
+```
+### Clickhouse Delivery
+``` 
+java -jar strilog-delivery-clickhouse.jar /path/to/clickhouse-config.yaml
+```
+## Requirements
+- Java 21 or higher
+- Maven for building (or use the included Maven wrapper)
+- Clickhouse database instance for storage
+
+## License
+
+Apache
