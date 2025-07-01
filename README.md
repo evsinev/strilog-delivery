@@ -96,26 +96,26 @@ Build all components with the following command:
 
 This will create standalone JAR files for each component with all dependencies included.
 
-## Deployment
-
-Each component can be deployed separately. Sample deployment scripts are available:
-- `deploy-sender-vemu-2.sh` - For deploying the sender component
-- `deploy-receiver-vicl-2.sh` - For deploying the receiver component
-- `deploy-clickhouse-vicl-2.sh` - For deploying the Clickhouse component
-
 ## Running the Applications
+
 ### Sender
 ``` 
 java -jar strilog-delivery-sender.jar /path/to/sender-config.yaml
 ```
+
 ### Receiver
-``` 
-java -jar strilog-delivery-receiver.jar /path/to/receiver-config.yaml
 ```
+export JETTY_PORT="8087" 
+export JETTY_CONTEXT="/delivery-receiver" 
+export RECEIVER_DIR="./receiver-queue"
+java -jar strilog-delivery-receiver.jar
+```
+
 ### Clickhouse Delivery
 ``` 
-java -jar strilog-delivery-clickhouse.jar /path/to/clickhouse-config.yaml
+java -jar strilog-delivery-clickhouse.jar /path/to/delivery-clickhouse-config.yaml
 ```
+
 ## Requirements
 - Java 21 or higher
 - Maven for building (or use the included Maven wrapper)
